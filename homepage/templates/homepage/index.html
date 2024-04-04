@@ -1,0 +1,235 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" crossorigin="anonymous" />
+    <link rel="stylesheet" href="{% static 'homepage/index.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans:ital,wght@0,100;0,300;0,400;0,500;0,700;0,800;0,900;1,100;1,300;1,400;1,500;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <title>Back After Gap</title> 
+</head>
+<body>
+    <!--TAGLINE-->
+    <div class="tagline">
+        <div class="box"><h2 class="headline">Back After Gap</h2></div>
+    </div>
+
+    <!--BUTTONS-->
+    <div class="optbtn">
+        <div class="directbtn"><button type="button" id="scrollleft"><i class="fa fa-angle-left" aria-hidden="true"></i></button></div>
+        <div class="mainbtn" id="mainBtnContainer">
+            <button type="button" id="aboutBtn">About</button>
+            <button type="button" id="valueBtn">Core Value</button>
+            <button type="button" id="strengthBtn">Strength</button>
+            <button type="button" id="skillBtn">Skills</button>
+            <button type="button" id="jobBtn">Dream Job</button>
+            <button type="button" id="aboutBtn">About</button>
+            <button type="button" id="aboutBtn">About</button>
+        </div>
+        <div class="directbtn"><button type="button" id="scrollright"><i class="fa fa-angle-right" aria-hidden="true"></i></button></div>
+    </div>
+
+    <!--QUESTION FORM-->
+    <div class="questbody">
+        <div class="imagecon" id="imageContainer">
+        </div>
+        <div class="questions" id="questionContainer">
+            <form class="questform" id="dynamicform" action="" method="get">
+                
+            </form>
+        </div>
+    </div>
+
+    <div class="submitbtn">
+        <div class="displaybtn"><button type="button">Display</button></div>
+        <div class="nextbtn" id="nextBtn"><button type="submit">Next</button></div>
+    </div>
+
+
+    <script>
+
+        function saveFormDataToLocalStorage() {
+            var formData = {};
+            var formInputs = document.getElementById('dynamicform').querySelectorAll('input');
+            formInputs.forEach(function(input) {
+                formData[input.name] = input.value;
+            });
+            localStorage.setItem('formData', JSON.stringify(formData));
+            displayFormData();
+        }
+
+        function displayFormData() {
+            var formData = JSON.parse(localStorage.getItem('formData'));
+            if (formData) {
+                var formInputs = document.getElementById('dynamicform').querySelectorAll('input');
+                formInputs.forEach(function(input) {
+                    if (formData[input.name]) {
+                        input.value = formData[input.name];
+                    }
+                });
+            }
+        }
+        // QUESTIONS
+
+        //  ABOUT QUESTION
+        document.getElementById('aboutBtn').addEventListener('click', function() {
+            // Update image
+            document.getElementById('imageContainer').innerHTML = '<img src="{% static "homepage/images/1.png" %}" alt="">';
+            
+            // Generate form
+            var formHTML = '<form id="dynamicform" action="" method="get">';
+            formHTML += '<input type="text" id="name" name="name" placeholder="Name"><br>';
+            formHTML += '<input type="tel" name="mobile" placeholder="Mobile Number"><br>';
+            formHTML += '<input type="email" name="email" placeholder="E-Mail"><br>';
+            formHTML += '<input type="url" name="linkedinurl" placeholder="linkedinurl"><br>';
+            formHTML += '<input type="url" name="githuburl" placeholder="GitHuburl"><br>';
+            formHTML += '</form>';
+
+            // Display form
+            document.getElementById('questionContainer').innerHTML = formHTML;
+            document.getElementById('nextBtn').style.display = 'block'; // Show the "Next" button
+            document.getElementById('nextBtn').onclick = function() {
+                // Save form response to local storage
+                saveFormDataToLocalStorage();
+
+                // Proceed to the next section
+                document.getElementById('valueBtn').click(); // Trigger click event for the next section button
+            };
+        });
+
+        // CORE VALUE
+        document.getElementById('valueBtn').addEventListener('click', function() {
+            // Update image
+            document.getElementById('imageContainer').innerHTML = '<img src="{% static "homepage/images/2.png" %}" alt="">';
+            // Generate form
+            var formHTML = '<form id="dynamicform" action="" method="get">';
+            formHTML += '<input type="text" id="name" name="q1" placeholder="What annoys you or gets under your skin at work?"><br>';
+            formHTML += '<input type="text" name="q2" placeholder="What brings you joy in your work?"><br>';
+            formHTML += '<input type="text" name="q3" placeholder="What could you not live without in a workplace or on a work team?"><br>';
+            formHTML += '<input type="text" name="q4" placeholder="Who do you admire and what do you admire about them?"><br>';
+            formHTML += '</form>';
+            // Display form
+            document.getElementById('questionContainer').innerHTML = formHTML;
+            document.getElementById('nextBtn').style.display = 'block'; // Show the "Next" button
+            document.getElementById('nextBtn').onclick = function() {
+                // Save form response to local storage
+                saveFormDataToLocalStorage();
+
+                // Proceed to the next section
+                document.getElementById('strengthBtn').click(); // Trigger click event for the next section button
+            };
+        });
+
+        // STRENGTH
+        document.getElementById('strengthBtn').addEventListener('click', function() {
+            // Update image
+            document.getElementById('imageContainer').innerHTML = '<img src="{% static "homepage/images/3.png" %}" alt="">';
+            // Generate form
+            var formHTML = '<form id="dynamicform" action="" method="get">';
+            formHTML += '<input type="text" id="name" name="q1" placeholder="What do you enjoy the most?"><br>';
+            formHTML += '<input type="text" name="q2" placeholder="What am I called on to do most often?"><br>';
+            formHTML += '<input type="text" name="q3" placeholder="what do I do best?"><br>';
+            formHTML += '<input type="text" name="q4" placeholder="What advice or expertise do others seek from me?"><br>';
+            formHTML += '</form>';
+            // Display form
+            document.getElementById('questionContainer').innerHTML = formHTML;
+            document.getElementById('nextBtn').style.display = 'block'; // Show the "Next" button
+            document.getElementById('nextBtn').onclick = function() {
+                // Save form response to local storage
+                saveFormDataToLocalStorage();
+
+                // Proceed to the next section
+                document.getElementById('skillBtn').click(); // Trigger click event for the next section button
+            };
+        });
+
+
+        // SKILLS
+        document.getElementById('skillBtn').addEventListener('click', function() {
+            // Update image
+            document.getElementById('imageContainer').innerHTML = '<img src="{% static "homepage/images/5.png" %}" alt="">';
+            // Generate form
+            var formHTML = '<form id="dynamicform" action="" method="get">';
+            formHTML += '<input type="text" id="name" name="q1" placeholder="Job: Title or description – where and when?"><br>';
+            formHTML += '<input type="text" name="q2" placeholder="Skills and experience: Direct or transferable"><br>';
+            formHTML += '<input type="text" name="q3" placeholder="Accomplishments"><br>';
+            formHTML += '<input type="text" name="q4" placeholder="Benefit to the Employer: how your skills and/or experience benefit the organization and its people"><br>';
+            formHTML += '</form>';
+            // Display form
+            document.getElementById('questionContainer').innerHTML = formHTML;
+            document.getElementById('nextBtn').style.display = 'block'; // Show the "Next" button
+            document.getElementById('nextBtn').onclick = function() {
+                // Save form response to local storage
+                saveFormDataToLocalStorage();
+
+                // Proceed to the next section
+                document.getElementById('jobBtn').click(); // Trigger click event for the next section button
+            };
+        });
+
+        // DREAM JOB
+        document.getElementById('jobBtn').addEventListener('click', function() {
+            // Update image
+            document.getElementById('imageContainer').innerHTML = '<img src="{% static "homepage/images/2.png" %}" alt="">';
+            // Generate form
+            var formHTML = '<form id="dynamicform" action="" method="get">';
+            formHTML += '<input type="text" id="name" name="q1" placeholder="If there were no restrictions, my dream job would be:"><br>';
+            formHTML += '<label for="q2">Is obtaining this dream job a realistic possibility for me?</label><br>';
+            formHTML += '<div class="options">';
+            formHTML += '<input type="radio" id="yes" name="q2" value="yes">';
+            formHTML += '<label for="yes">Yes</label>';
+            formHTML += '<input type="radio" id="no" name="q2" value="no">';
+            formHTML += '<label for="no">No</label>';
+            formHTML += '</div>'
+            formHTML += '<input type="text" name="q3" placeholder="If yes, explain how."><br>';
+            formHTML += '<input type="text" name="q4" placeholder="List at least ten specific attributes of this dream job, as you imagine it, that appeal to you:"><br>';
+            formHTML += '<input type="text" name="q5" placeholder="Working in this dream job would make me feel"><br>';
+            formHTML += '<input type="text" name="q6" placeholder="Working this dream job would fill my need(s) for"><br>';
+            formHTML += '<input type="text" name="q7" placeholder="Working in this dream job would meet my goal(s) of"><br>';
+            formHTML += '</form>';
+            // Display form
+            document.getElementById('questionContainer').innerHTML = formHTML;
+            document.getElementById('nextBtn').style.display = 'block'; // Show the "Next" button
+            document.getElementById('nextBtn').onclick = function() {
+                // Save form response to local storage
+                saveFormDataToLocalStorage();
+
+                // Proceed to the next section
+                document.getElementById('valueBtn').click(); // Trigger click event for the next section button
+            };
+        });
+
+        window.onload = function() {
+            displayFormData();
+        };
+        
+        // COLOUR CHANGE ACTIVE
+        var buttons = document.querySelectorAll('.mainbtn button');
+        // Add click event listener to each button
+        buttons.forEach(function(button) {
+            button.addEventListener('click', function() {
+                // Remove 'active' class from all buttons
+                buttons.forEach(function(btn) {
+                    btn.classList.remove('active');
+                });
+
+                // Add 'active' class to the clicked button
+                button.classList.add('active');
+            });
+        });
+
+
+        // SCROLL BUTTON
+        document.getElementById('scrollleft').addEventListener('click',function(){
+            document.getElementById('mainBtnContainer').scrollBy(-200,0);
+        });
+        document.getElementById('scrollright').addEventListener('click',function(){
+            document.getElementById('mainBtnContainer').scrollBy(200,0);
+        });
+    </script>
+</body>
+</html>

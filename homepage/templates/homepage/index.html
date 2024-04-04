@@ -27,8 +27,8 @@
             <button type="button" id="strengthBtn">Strength</button>
             <button type="button" id="skillBtn">Skills</button>
             <button type="button" id="jobBtn">Dream Job</button>
-            <button type="button" id="aboutBtn">About</button>
-            <button type="button" id="aboutBtn">About</button>
+            <button type="button" id="preferBtn">Preference</button>
+            <button type="button" id="careerBtn">Career Priorities</button>
         </div>
         <div class="directbtn"><button type="button" id="scrollright"><i class="fa fa-angle-right" aria-hidden="true"></i></button></div>
     </div>
@@ -51,28 +51,6 @@
 
 
     <script>
-
-        function saveFormDataToLocalStorage() {
-            var formData = {};
-            var formInputs = document.getElementById('dynamicform').querySelectorAll('input');
-            formInputs.forEach(function(input) {
-                formData[input.name] = input.value;
-            });
-            localStorage.setItem('formData', JSON.stringify(formData));
-            displayFormData();
-        }
-
-        function displayFormData() {
-            var formData = JSON.parse(localStorage.getItem('formData'));
-            if (formData) {
-                var formInputs = document.getElementById('dynamicform').querySelectorAll('input');
-                formInputs.forEach(function(input) {
-                    if (formData[input.name]) {
-                        input.value = formData[input.name];
-                    }
-                });
-            }
-        }
         // QUESTIONS
 
         //  ABOUT QUESTION
@@ -199,9 +177,121 @@
                 saveFormDataToLocalStorage();
 
                 // Proceed to the next section
-                document.getElementById('valueBtn').click(); // Trigger click event for the next section button
+                document.getElementById('preferBtn').click(); // Trigger click event for the next section button
             };
         });
+
+        // Preference
+        document.getElementById('preferBtn').addEventListener('click', function() {
+            // Update image
+            document.getElementById('imageContainer').innerHTML = '<img src="{% static "homepage/images/2.png" %}" alt="">';
+            // Generate form
+            var formHTML = '<form id="dynamicform" action="" method="get">';
+            formHTML += '<label for="q19_20">Size of Organization</label><br>';
+            formHTML += '<input type="text" id="q19" name="q19" placeholder="What I think I want"><br>';
+            formHTML += '<input type="text" id="q20" name="q20" placeholder="What I know I don’t want"><br>';
+            formHTML += '<label for="q20_21">Type of Organization</label><br>';
+            formHTML += '<input type="text" id="q21" name="q21" placeholder="What I think I want"><br>';
+            formHTML += '<input type="text" id="q22" name="q22" placeholder="What I know I don’t want"><br>';
+            formHTML += '<label for="q22_23">Industry</label><br>';
+            formHTML += '<input type="text" id="q22" name="q22" placeholder="What I think I want"><br>';
+            formHTML += '<input type="text" id="q23" name="q23" placeholder="What I know I don’t want"><br>';
+            formHTML += '<label for="q24_25">Department</label><br>';
+            formHTML += '<input type="text" id="q24" name="q24" placeholder="What I think I want"><br>';
+            formHTML += '<input type="text" id="q25" name="q25" placeholder="What I know I don’t want"><br>';
+            formHTML += '<label for="q26_27">Function</label><br>';
+            formHTML += '<input type="text" id="q26" name="q26" placeholder="What I think I want"><br>';
+            formHTML += '<input type="text" id="q27" name="q27" placeholder="What I know I don’t want"><br>';
+            formHTML += '</form>';
+            // Display form
+            document.getElementById('questionContainer').innerHTML = formHTML;
+            document.getElementById('nextBtn').style.display = 'block'; // Show the "Next" button
+            document.getElementById('nextBtn').onclick = function() {
+                // Save form response to local storage
+                saveFormDataToLocalStorage();
+
+                // Proceed to the next section
+                document.getElementById('careerBtn').click(); // Trigger click event for the next section button
+            };
+        });
+
+        // CAREER PRIORITIES
+        document.getElementById('careerBtn').addEventListener('click', function() {
+            // Update image
+            document.getElementById('imageContainer').innerHTML = '<img src="{% static "homepage/images/2.png" %}" alt="">';
+            // Generate form
+            var formHTML = '<form id="dynamicform" action="" method="get">';
+            formHTML += '<label for="q28_29">Rate and Explain: Money</label><br>';
+            formHTML += '<input type="range" id="q28" name="q28" min="1" max="10" value="5"><output id="q28Value">5</output><br>';
+            formHTML += '<input type="text" id="q29" name="q29" placeholder="Why is this important to you?"><br>';
+            formHTML += '<label for="q30_31">Rate and Explain: Benefits</label><br>';
+            formHTML += '<input type="range" id="q30" name="q30" min="1" max="10" value="5"><output id="q30Value">5</output><br>';
+            formHTML += '<input type="text" id="q31" name="q31" placeholder="Why is this important to you?"><br>';
+            formHTML += '<label for="q32_33">Rate and Explain: Creative control</label><br>';
+            formHTML += '<input type="range" id="q32" name="q32" min="1" max="10" value="5"><output id="q32Value">5</output><br>';
+            formHTML += '<input type="text" id="q33" name="q33" placeholder="Why is this important to you?"><br>';
+            formHTML += '<label for="q34_35">Rate and Explain: Flexible work options</label><br>';
+            formHTML += '<input type="range" id="q34" name="q34" min="1" max="10" value="5"><output id="q34Value">5</output><br>';
+            formHTML += '<input type="text" id="q35" name="q35" placeholder="Why is this important to you?"><br>';
+            formHTML += '<label for="q36_37">Rate and Explain: Proximity to home/school/daycare</label><br>';
+            formHTML += '<input type="range" id="q36" name="q36" min="1" max="10" value="5"><output id="q36Value">5</output><br>';
+            formHTML += '<input type="text" id="q37" name="q37" placeholder="Why is this important to you?"><br>';
+            formHTML += '<label for="q38_39">Rate and Explain: Challenge</label><br>';
+            formHTML += '<input type="range" id="q38" name="q38" min="1" max="10" value="5"><output id="q38Value">5</output><br>';
+            formHTML += '<input type="text" id="q39" name="q39" placeholder="Why is this important to you?"><br>';
+            formHTML += '<label for="q40_41">Rate and Explain: Social connections and camaraderie</label><br>';
+            formHTML += '<input type="range" id="q40" name="q40" min="1" max="10" value="5"><output id="q40Value">5</output><br>';
+            formHTML += '<input type="text" id="q41" name="q41" placeholder="Why is this important to you?"><br>';
+            formHTML += '<label for="q42_43">Rate and Explain: Measurable success</label><br>';
+            formHTML += '<input type="range" id="q42" name="q42" min="1" max="10" value="5"><output id="q42Value">5</output><br>';
+            formHTML += '<input type="text" id="q43" name="q43" placeholder="Why is this important to you?"><br>';
+            formHTML += '</form>';
+            // Display form
+            document.getElementById('questionContainer').innerHTML = formHTML;
+            document.getElementById('nextBtn').style.display = 'block'; // Show the "Next" button
+            document.getElementById('nextBtn').onclick = function() {
+                // Save form response to local storage
+                saveFormDataToLocalStorage();
+
+                // Proceed to the next section
+                document.getElementById('careerBtn').click(); // Trigger click event for the next section button
+            };
+            document.querySelectorAll('input[type="range"]').forEach(function(input) {
+                var output = document.getElementById(input.id + 'Value');
+                output.textContent = input.value;
+
+                input.addEventListener('input', function() {
+                    output.textContent = this.value;
+                });
+            });
+        });
+
+        function saveFormDataToLocalStorage() {
+            var formData = JSON.parse(localStorage.getItem('formData')) || {};
+            var form = document.getElementById('dynamicform');
+            for (var i = 0; i < form.elements.length; i++) {
+                var input = form.elements[i];
+                if (input.name) {
+                    formData[input.name] = input.value;
+                }
+            }
+            localStorage.setItem('formData', JSON.stringify(formData));
+            displayFormData();
+        }
+
+        function displayFormData() {
+            var formData = JSON.parse(localStorage.getItem('formData'));
+            if (formData) {
+                for (var key in formData) {
+                    if (formData.hasOwnProperty(key)) {
+                        var input = document.getElementById(key);
+                        if (input) {
+                            input.value = formData[key];
+                        }
+                    }
+                }
+            }
+        }
 
         window.onload = function() {
             displayFormData();

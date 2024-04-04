@@ -147,6 +147,17 @@ body{
     width: 20px;
     height: 20px;
 }
+.questions input[type='range']{
+    width: 50%;
+    height: fit-content;
+    margin-left: 15px;
+}
+.questions output{
+    width: fit-content;
+    padding-left: 15px;
+    font-family: 'Alegreya Sans', sans-serif;
+    font-weight: 600;
+}
 .questions input::placeholder {
     color: #01327B; /* Change to your desired color */
 }

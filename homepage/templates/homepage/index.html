@@ -49,18 +49,113 @@
         <div class="nextbtn" id="nextBtn"><button type="submit">Next</button></div>
     </div>
 
-    <div id="overlay" class="overlay">
+    <!--<div id="overlay" class="overlay">
         <div class="overlay-content">
             <span class="close" onclick="closeOverlay()">&times;</span>
             <h2>Question Responses</h2>
             <div id="responseContainer"></div>
         </div>
-    </div>
+    </div>-->
 
     <script>
         function saveFormDataToLocalStorage() {
             var formData = JSON.parse(localStorage.getItem('formData')) || {};
             var form = document.getElementById('dynamicform');
+            var aboutBtnDict = {
+                "Name": document.getElementById('name').value,
+                "Mobile Number": document.getElementById('mobile').value,
+                "E-Mail": document.getElementById('email').value,
+                "linkedinurl": document.getElementById('linkedinurl').value,
+                "GitHuburl": document.getElementById('githuburl').value
+            };
+            // Store aboutBtnDict along with form data
+            formData['aboutBtnDict'] = aboutBtnDict;
+
+            var valueBtnDict = {
+                    "What annoys you or gets under your skin at work?": document.getElementById('q1').value,
+                    "What brings you joy in your work?": document.getElementById('q2').value,
+                    "What could you not live without in a workplace or on a work team?": document.getElementById('q3').value,
+                    "Who do you admire and what do you admire about them?": document.getElementById('q4').value
+            };
+            formData['valueBtnDict'] = valueBtnDict
+
+            var strengthBtnDict = {
+                    "What do you enjoy the most?": document.getElementById('q5').value,
+                    "What am I called on to do most often?": document.getElementById('q6').value,
+                    "what do I do best?": document.getElementById('q7').value,
+                    "What advice or expertise do others seek from me?": document.getElementById('q8').value
+            };
+            formData['strengthBtnDict'] = strengthBtnDict
+
+            var skillBtnDict = {
+                    "Job: Title or description – where and when?": document.getElementById('q9').value,
+                    "Skills and experience: Direct or transferable": document.getElementById('q10').value,
+                    "Accomplishments": document.getElementById('q11').value,
+                    "Benefit to the Employer: how your skills and/or experience benefit the organization and its people": document.getElementById('q12').value
+            };
+            formData['skillBtnDict'] = skillBtnDict
+
+            var jobBtnDict = {
+                    "If there were no restrictions, my dream job would be:": document.getElementById('q13').value,
+                    "Is obtaining this dream job a realistic possibility for me?": document.querySelector('input[name="r1"]:checked').value || "",
+                    "If yes, explain how.": document.getElementById('q14').value,
+                    "List at least ten specific attributes of this dream job, as you imagine it, that appeal to you:": document.getElementById('q15').value,
+                    "Working in this dream job would make me feel": document.getElementById('q16').value,
+                    "Working this dream job would fill my need(s) for": document.getElementById('q17').value,
+                    "Working in this dream job would meet my goal(s) of": document.getElementById('q18').value
+            };
+            formData['jobBtnDict'] = jobBtnDict
+
+            var preferBtnDict = {
+                    "Size of Organization - What I think I want": document.getElementById('q19').value,
+                    "Size of Organization - What I know I don’t want": document.getElementById('q20').value,
+                    "Type of Organization - What I think I want": document.getElementById('q21').value,
+                    "Type of Organization - What I know I don’t want": document.getElementById('q22').value,
+                    "Industry - What I think I want": document.getElementById('q22').value,
+                    "Industry - What I know I don’t want": document.getElementById('q23').value,
+                    "Department - What I think I want": document.getElementById('q24').value,
+                    "Department - What I know I don’t want": document.getElementById('q25').value,
+                    "Function - What I think I want": document.getElementById('q26').value,
+                    "Function - What I know I don’t want": document.getElementById('q27').value
+            };
+            formData['preferBtnDict'] = preferBtnDict
+
+            var careerBtnDict = {
+                    "Rate and Explain: Money": {
+                        "Value": document.getElementById('q28').value,
+                        "Explanation": document.getElementById('q29').value
+                    },
+                    "Rate and Explain: Benefits": {
+                        "Value": document.getElementById('q30').value,
+                        "Explanation": document.getElementById('q31').value
+                    },
+                    "Rate and Explain: Creative control": {
+                        "Value": document.getElementById('q32').value,
+                        "Explanation": document.getElementById('q33').value
+                    },
+                    "Rate and Explain: Flexible work options": {
+                        "Value": document.getElementById('q34').value,
+                        "Explanation": document.getElementById('q35').value
+                    },
+                    "Rate and Explain: Proximity to home/school/daycare": {
+                        "Value": document.getElementById('q36').value,
+                        "Explanation": document.getElementById('q37').value
+                    },
+                    "Rate and Explain: Challenge": {
+                        "Value": document.getElementById('q38').value,
+                        "Explanation": document.getElementById('q39').value
+                    },
+                    "Rate and Explain: Social connections and camaraderie": {
+                        "Value": document.getElementById('q40').value,
+                        "Explanation": document.getElementById('q41').value
+                    },
+                    "Rate and Explain: Measurable success": {
+                        "Value": document.getElementById('q42').value,
+                        "Explanation": document.getElementById('q43').value
+                    }
+            };
+            formData['careerBtnDict'] = careerBtnDict
+
             for (var i = 0; i < form.elements.length; i++) {
                 var input = form.elements[i];
                 if (input.placeholder) { // Check if the input has a placeholder
@@ -70,26 +165,52 @@
             localStorage.setItem('formData', JSON.stringify(formData));
             displayFormData();
         }
-        // QUESTIONS
 
+        function getElementValueById(id) {
+            var element = document.getElementById(id);
+            return element ? element.value : '';
+        }
+
+        
+        function displayFormData() {
+            var formData = JSON.parse(localStorage.getItem('formData'));
+            if (formData) {
+                for (var key in formData) {
+                    if (formData.hasOwnProperty(key)) {
+                        var input = document.getElementById(key);
+                        if (input) {
+                            input.value = formData[key];
+                        }
+                    }
+                }
+            }
+        }
+        // QUESTIONS
         //  ABOUT QUESTION
         document.getElementById('aboutBtn').addEventListener('click', function() {
             // Update image
             document.getElementById('imageContainer').innerHTML = '<img src="{% static "homepage/images/1.png" %}" alt="">';
-            
             // Generate form
             var formHTML = '<form id="dynamicform" action="" method="get">';
             formHTML += '<input type="text" id="name" name="name" placeholder="Name"><br>';
-            formHTML += '<input type="tel" name="mobile" placeholder="Mobile Number"><br>';
-            formHTML += '<input type="email" name="email" placeholder="E-Mail"><br>';
-            formHTML += '<input type="url" name="linkedinurl" placeholder="linkedinurl"><br>';
-            formHTML += '<input type="url" name="githuburl" placeholder="GitHuburl"><br>';
+            formHTML += '<input type="tel" name="mobile" id="mobile" placeholder="Mobile Number"><br>';
+            formHTML += '<input type="email" name="email" id="email" placeholder="E-Mail"><br>';
+            formHTML += '<input type="url" name="linkedinurl" id="linkedinurl" placeholder="linkedinurl"><br>';
+            formHTML += '<input type="url" name="githuburl" id="githuburl" placeholder="GitHuburl"><br>';
             formHTML += '</form>';
 
             // Display form
             document.getElementById('questionContainer').innerHTML = formHTML;
             document.getElementById('nextBtn').style.display = 'block'; // Show the "Next" button
             document.getElementById('nextBtn').onclick = function() {
+                var aboutBtnDict = {
+                "Name": document.getElementById('name').value,
+                "Mobile Number": document.getElementById('mobile').value,
+                "E-Mail": document.getElementById('email').value,
+                "linkedinurl": document.getElementById('linkedinurl').value,
+                "GitHuburl": document.getElementById('githuburl').value
+            };
+            console.log(aboutBtnDict);
                 // Save form response to local storage
                 saveFormDataToLocalStorage();
 
@@ -113,13 +234,21 @@
             document.getElementById('questionContainer').innerHTML = formHTML;
             document.getElementById('nextBtn').style.display = 'block'; // Show the "Next" button
             document.getElementById('nextBtn').onclick = function() {
+                var valueBtnDict = {
+                    "What annoys you or gets under your skin at work?": document.getElementById('q1').value,
+                    "What brings you joy in your work?": document.getElementById('q2').value,
+                    "What could you not live without in a workplace or on a work team?": document.getElementById('q3').value,
+                    "Who do you admire and what do you admire about them?": document.getElementById('q4').value
+                };
                 // Save form response to local storage
+                console.log(valueBtnDict);
                 saveFormDataToLocalStorage();
 
                 // Proceed to the next section
                 document.getElementById('strengthBtn').click(); // Trigger click event for the next section button
             };
         });
+    
 
         // STRENGTH
         document.getElementById('strengthBtn').addEventListener('click', function() {
@@ -136,6 +265,12 @@
             document.getElementById('questionContainer').innerHTML = formHTML;
             document.getElementById('nextBtn').style.display = 'block'; // Show the "Next" button
             document.getElementById('nextBtn').onclick = function() {
+                var strengthBtnDict = {
+                    "What do you enjoy the most?": document.getElementById('q5').value,
+                    "What am I called on to do most often?": document.getElementById('q6').value,
+                    "what do I do best?": document.getElementById('q7').value,
+                    "What advice or expertise do others seek from me?": document.getElementById('q8').value
+                };
                 // Save form response to local storage
                 saveFormDataToLocalStorage();
 
@@ -160,6 +295,12 @@
             document.getElementById('questionContainer').innerHTML = formHTML;
             document.getElementById('nextBtn').style.display = 'block'; // Show the "Next" button
             document.getElementById('nextBtn').onclick = function() {
+                var skillBtnDict = {
+                    "Job: Title or description – where and when?": document.getElementById('q9').value,
+                    "Skills and experience: Direct or transferable": document.getElementById('q10').value,
+                    "Accomplishments": document.getElementById('q11').value,
+                    "Benefit to the Employer: how your skills and/or experience benefit the organization and its people": document.getElementById('q12').value
+                };
                 // Save form response to local storage
                 saveFormDataToLocalStorage();
 
@@ -167,6 +308,7 @@
                 document.getElementById('jobBtn').click(); // Trigger click event for the next section button
             };
         });
+
 
         // DREAM JOB
         document.getElementById('jobBtn').addEventListener('click', function() {
@@ -192,6 +334,15 @@
             document.getElementById('questionContainer').innerHTML = formHTML;
             document.getElementById('nextBtn').style.display = 'block'; // Show the "Next" button
             document.getElementById('nextBtn').onclick = function() {
+                var jobBtnDict = {
+                    "If there were no restrictions, my dream job would be:": document.getElementById('q13').value,
+                    "Is obtaining this dream job a realistic possibility for me?": document.querySelector('input[name="r1"]:checked').value || "",
+                    "If yes, explain how.": document.getElementById('q14').value,
+                    "List at least ten specific attributes of this dream job, as you imagine it, that appeal to you:": document.getElementById('q15').value,
+                    "Working in this dream job would make me feel": document.getElementById('q16').value,
+                    "Working this dream job would fill my need(s) for": document.getElementById('q17').value,
+                    "Working in this dream job would meet my goal(s) of": document.getElementById('q18').value
+                };
                 // Save form response to local storage
                 saveFormDataToLocalStorage();
 
@@ -226,6 +377,18 @@
             document.getElementById('questionContainer').innerHTML = formHTML;
             document.getElementById('nextBtn').style.display = 'block'; // Show the "Next" button
             document.getElementById('nextBtn').onclick = function() {
+                var preferBtnDict = {
+                    "Size of Organization - What I think I want": document.getElementById('q19').value,
+                    "Size of Organization - What I know I don’t want": document.getElementById('q20').value,
+                    "Type of Organization - What I think I want": document.getElementById('q21').value,
+                    "Type of Organization - What I know I don’t want": document.getElementById('q22').value,
+                    "Industry - What I think I want": document.getElementById('q22').value,
+                    "Industry - What I know I don’t want": document.getElementById('q23').value,
+                    "Department - What I think I want": document.getElementById('q24').value,
+                    "Department - What I know I don’t want": document.getElementById('q25').value,
+                    "Function - What I think I want": document.getElementById('q26').value,
+                    "Function - What I know I don’t want": document.getElementById('q27').value
+                };
                 // Save form response to local storage
                 saveFormDataToLocalStorage();
 
@@ -269,6 +432,40 @@
             document.getElementById('questionContainer').innerHTML = formHTML;
             document.getElementById('nextBtn').style.display = 'block'; // Show the "Next" button
             document.getElementById('nextBtn').onclick = function() {
+                var careerBtnDict = {
+                    "Rate and Explain: Money": {
+                        "Value": document.getElementById('q28').value,
+                        "Explanation": document.getElementById('q29').value
+                    },
+                    "Rate and Explain: Benefits": {
+                        "Value": document.getElementById('q30').value,
+                        "Explanation": document.getElementById('q31').value
+                    },
+                    "Rate and Explain: Creative control": {
+                        "Value": document.getElementById('q32').value,
+                        "Explanation": document.getElementById('q33').value
+                    },
+                    "Rate and Explain: Flexible work options": {
+                        "Value": document.getElementById('q34').value,
+                        "Explanation": document.getElementById('q35').value
+                    },
+                    "Rate and Explain: Proximity to home/school/daycare": {
+                        "Value": document.getElementById('q36').value,
+                        "Explanation": document.getElementById('q37').value
+                    },
+                    "Rate and Explain: Challenge": {
+                        "Value": document.getElementById('q38').value,
+                        "Explanation": document.getElementById('q39').value
+                    },
+                    "Rate and Explain: Social connections and camaraderie": {
+                        "Value": document.getElementById('q40').value,
+                        "Explanation": document.getElementById('q41').value
+                    },
+                    "Rate and Explain: Measurable success": {
+                        "Value": document.getElementById('q42').value,
+                        "Explanation": document.getElementById('q43').value
+                    }
+                };
                 // Save form response to local storage
                 saveFormDataToLocalStorage();
 
@@ -285,20 +482,6 @@
             });
         });
 
-        function displayFormData() {
-            var formData = JSON.parse(localStorage.getItem('formData'));
-            if (formData) {
-                for (var key in formData) {
-                    if (formData.hasOwnProperty(key)) {
-                        var input = document.getElementById(key);
-                        if (input) {
-                            input.value = formData[key];
-                        }
-                    }
-                }
-            }
-        }
-
         window.onload = function() {
             displayFormData();
         };
@@ -312,7 +495,6 @@
                 buttons.forEach(function(btn) {
                     btn.classList.remove('active');
                 });
-
                 // Add 'active' class to the clicked button
                 button.classList.add('active');
             });
@@ -326,7 +508,6 @@
         document.getElementById('scrollright').addEventListener('click',function(){
             document.getElementById('mainBtnContainer').scrollBy(200,0);
         });
-
 
         document.getElementById('displayBtn').addEventListener('click', function() {
             displayOverlay();
@@ -364,6 +545,16 @@
             var overlay = document.getElementById('overlay');
             overlay.style.display = 'none';
         }
+
+        document.querySelectorAll('input[type="range"]').forEach(function(input) {
+            var output = document.getElementById(input.id + 'Value');
+            output.textContent = input.value;
+
+            input.addEventListener('input', function() {
+                output.textContent = this.value;
+            });
+        });
+
     </script>
 </body>
 </html>

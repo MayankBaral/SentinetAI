@@ -12,7 +12,49 @@ body{
     gap: 2rem;
     margin-top: 2rem;
 }
-
+.heading{
+    width: 100%;
+    height: 4rem;
+    display: flex;
+    justify-content: center;
+}
+.heading h1{
+    width: 90%;
+    height: 100%;
+    background-image: linear-gradient(to bottom right, #2C40F3, #0A1368);
+    display: flex;
+    align-content: center;
+    flex-wrap: wrap;
+    border-radius: 1rem 0 1rem;
+    box-shadow: 5px 5px 5px gray;
+    color: white;
+    padding-left: 41%;
+    font-size: 2rem;
+}
+.container{
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    position: relative;
+}
+#responseContainer{
+    width: 85%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+#responseContainer strong{
+    font-weight: bold;
+    font-size: 1.4rem;
+    margin-top: 1.5rem;
+}
+#responseContainer p{
+    font-size: 1.2rem;
+}
+/*
 .headline{
     width: 100%;
     height: 4rem;
@@ -70,7 +112,7 @@ ul .answer{
     padding-left: 10px;
 }
 
-/* CORE VALUE*/
+/* CORE VALUE
 .firstcontent{
     width: 100%;
     height: fit-content;
@@ -84,7 +126,7 @@ ul .answer{
     height: 100%;
 }
 
-/* STRENGTH */
+/* STRENGTH 
 .secondcontent{
     width: 100%;
     height: fit-content;
@@ -98,7 +140,7 @@ ul .answer{
     height: 100%;
 }
 
-/* WEAKNESS*/
+/* WEAKNESS
 .thirdcontent{
     width: 100%;
     height: fit-content;
@@ -112,7 +154,7 @@ ul .answer{
     height: 100%;
 }
 
-/* BEST CAREER */
+/* BEST CAREER 
 .fourthcontent{
     width: 100%;
     height: fit-content;
@@ -125,3 +167,4 @@ ul .answer{
     width: 80%;
     height: 100%;
 }
+*/

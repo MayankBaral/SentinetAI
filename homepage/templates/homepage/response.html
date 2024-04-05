@@ -13,7 +13,8 @@
     <title>Back After Gap</title>
 </head>
 <body>
-    <div class="headline">
+    <!--
+        <div class="headline">
         <h2 class="head">Analysis</h2>
     </div>
     <div class="basicinfo">
@@ -81,5 +82,22 @@
             </ul>
         </div>
     </div>
+    -->
+    <h1>Form Responses</h1>
+    <div id="responseContainer"></div>
+    <script>
+        // Retrieve form data from localStorage
+        var formData = JSON.parse(localStorage.getItem('formData'));
+        var responseContainer = document.getElementById('responseContainer');
+
+        // Display form responses
+        for (var key in formData) {
+            if (formData.hasOwnProperty(key)) {
+                var responseItem = document.createElement('div');
+                responseItem.innerHTML = '<strong>' + key + ':</strong> ' + formData[key];
+                responseContainer.appendChild(responseItem);
+            }
+        }
+    </script>
 </body>
 </html>

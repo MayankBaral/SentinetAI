@@ -332,26 +332,32 @@
             displayOverlay();
         });
 
-        // Function to display the overlay
         function displayOverlay() {
             var formData = JSON.parse(localStorage.getItem('formData'));
-            var responseContainer = document.getElementById('responseContainer');
-            responseContainer.innerHTML = ''; // Clear previous content
-
-            if (formData) {
-                for (var key in formData) {
-                    if (formData.hasOwnProperty(key)) {
-                        var responseItem = document.createElement('div');
-                        var labelHTML = '<label>' + key + '</label><br>'; // Placeholder as label
-                        responseItem.innerHTML = '<strong>' + key + '</strong> ' + '<p>' + formData[key] + '</p>';
-                        responseContainer.appendChild(responseItem);
-                    }
-                }
-            }
-
-            var overlay = document.getElementById('overlay');
-            overlay.style.display = 'block';
+            localStorage.setItem('formData', JSON.stringify(formData)); // Store form data for access in result.html
+            window.location.href = 'response'; // Redirect to result.html
         }
+
+        // Function to display the overlay
+        //function displayOverlay() {
+        //    var formData = JSON.parse(localStorage.getItem('formData'));
+        //    var responseContainer = document.getElementById('responseContainer');
+        //    responseContainer.innerHTML = ''; // Clear previous content
+
+        //    if (formData) {
+        //        for (var key in formData) {
+        //            if (formData.hasOwnProperty(key)) {
+        //                var responseItem = document.createElement('div');
+        //                var labelHTML = '<label>' + key + '</label><br>'; // Placeholder as label
+        //                responseItem.innerHTML = '<strong>' + key + '</strong> ' + '<p>' + formData[key] + '</p>';
+        //                responseContainer.appendChild(responseItem);
+        //            }
+        //        }
+        //    }
+
+        //    var overlay = document.getElementById('overlay');
+        //    overlay.style.display = 'block';
+        //}
 
         // Function to close the overlay
         function closeOverlay() {

@@ -45,10 +45,17 @@
     </div>
 
     <div class="submitbtn">
-        <div class="displaybtn"><button type="button">Display</button></div>
+        <div class="displaybtn" id="displayBtn"><button type="button">Display</button></div>
         <div class="nextbtn" id="nextBtn"><button type="submit">Next</button></div>
     </div>
 
+    <div id="overlay" class="overlay">
+        <div class="overlay-content">
+            <span class="close" onclick="closeOverlay()">&times;</span>
+            <h2>Question Responses</h2>
+            <div id="responseContainer"></div>
+        </div>
+    </div>
 
     <script>
         // QUESTIONS
@@ -320,6 +327,43 @@
         document.getElementById('scrollright').addEventListener('click',function(){
             document.getElementById('mainBtnContainer').scrollBy(200,0);
         });
+
+
+        document.getElementById('displayBtn').addEventListener('click', function() {
+            displayOverlay();
+        });
+
+        // Function to display the overlay
+        function displayOverlay() {
+            var formData = JSON.parse(localStorage.getItem('formData'));
+            var responseContainer = document.getElementById('responseContainer');
+            responseContainer.innerHTML = ''; // Clear previous content
+
+            if (formData) {
+                var form = document.getElementById('dynamicform');
+                for (var key in formData) {
+                    if (formData.hasOwnProperty(key)) {
+                        var input = form.querySelector('[name="' + key + '"]');
+                        var label = form.querySelector('[for="' + key + '"]');
+                        var labelText = label ? label.textContent : ''; // Fetch label text if available
+                        var placeholder = input ? input.placeholder : '';
+                        var responseItem = document.createElement('div');
+                        var labelHTML = labelText ? '<label>' + labelText + '</label><br>' : ''; // Add label if available
+                        responseItem.innerHTML = labelHTML + '<strong>' + placeholder + ':</strong> ' + formData[key];
+                        responseContainer.appendChild(responseItem);
+                    }
+                }
+            }
+
+            var overlay = document.getElementById('overlay');
+            overlay.style.display = 'block';
+        }
+
+        // Function to close the overlay
+        function closeOverlay() {
+            var overlay = document.getElementById('overlay');
+            overlay.style.display = 'none';
+        }
     </script>
 </body>
 </html>

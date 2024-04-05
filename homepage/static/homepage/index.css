@@ -185,3 +185,33 @@ body{
     font-size: 1.4rem;
     font-weight: 500;
 }
+
+
+.overlay-content{
+    width: 60%;
+    height: 29rem;
+    position: absolute;
+    overflow-y: scroll;
+    top: 25%;
+    left: 21%;
+    background-color: thistle;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 20px;
+    box-shadow: 5px 5px 5px grey;
+}
+.overlay-content::-webkit-scrollbar{
+    display: none;
+}
+#responseContainer{
+    display: flex;
+    flex-direction: column;
+    width: 73%;
+    gap: 1rem;
+}
+#responseContainer div{
+    display: flex;
+    flex-direction: column;
+}

@@ -194,7 +194,7 @@ body{
     overflow-y: scroll;
     top: 25%;
     left: 21%;
-    background-color: thistle;
+    background-color: #0E1130;
     padding: 1rem;
     display: flex;
     flex-direction: column;
@@ -202,16 +202,42 @@ body{
     border-radius: 20px;
     box-shadow: 5px 5px 5px grey;
 }
+.overlay-content h2{
+    background-color: #64aaff73;
+    padding: 5px 20px;
+    color: white;
+    border-radius: 20px;
+    font-family: 'Alegreya Sans', sans-serif;
+}
 .overlay-content::-webkit-scrollbar{
     display: none;
 }
+.close{
+    position: absolute;
+    right: 4%;
+    font-size: 1.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    color: white;
+}
 #responseContainer{
+    font-family: 'Alegreya Sans', sans-serif;
     display: flex;
     flex-direction: column;
     width: 73%;
-    gap: 1rem;
+    gap: 1.8rem;
+    color: white;
 }
 #responseContainer div{
     display: flex;
     flex-direction: column;
+}
+#responseContainer p{
+    color: #01327B;
+    background-color: white;
+    padding: 5px 15px;
+    border-radius: 10px;
+}
+#responseContainer strong{
+    padding: 5px;
 }

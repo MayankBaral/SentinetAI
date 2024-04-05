@@ -58,6 +58,18 @@
     </div>
 
     <script>
+        function saveFormDataToLocalStorage() {
+            var formData = JSON.parse(localStorage.getItem('formData')) || {};
+            var form = document.getElementById('dynamicform');
+            for (var i = 0; i < form.elements.length; i++) {
+                var input = form.elements[i];
+                if (input.placeholder) { // Check if the input has a placeholder
+                    formData[input.placeholder] = input.value; // Store the response with placeholder as key
+                }
+            }
+            localStorage.setItem('formData', JSON.stringify(formData));
+            displayFormData();
+        }
         // QUESTIONS
 
         //  ABOUT QUESTION
@@ -273,19 +285,6 @@
             });
         });
 
-        function saveFormDataToLocalStorage() {
-            var formData = JSON.parse(localStorage.getItem('formData')) || {};
-            var form = document.getElementById('dynamicform');
-            for (var i = 0; i < form.elements.length; i++) {
-                var input = form.elements[i];
-                if (input.name) {
-                    formData[input.name] = input.value;
-                }
-            }
-            localStorage.setItem('formData', JSON.stringify(formData));
-            displayFormData();
-        }
-
         function displayFormData() {
             var formData = JSON.parse(localStorage.getItem('formData'));
             if (formData) {
@@ -340,16 +339,11 @@
             responseContainer.innerHTML = ''; // Clear previous content
 
             if (formData) {
-                var form = document.getElementById('dynamicform');
                 for (var key in formData) {
                     if (formData.hasOwnProperty(key)) {
-                        var input = form.querySelector('[name="' + key + '"]');
-                        var label = form.querySelector('[for="' + key + '"]');
-                        var labelText = label ? label.textContent : ''; // Fetch label text if available
-                        var placeholder = input ? input.placeholder : '';
                         var responseItem = document.createElement('div');
-                        var labelHTML = labelText ? '<label>' + labelText + '</label><br>' : ''; // Add label if available
-                        responseItem.innerHTML = labelHTML + '<strong>' + placeholder + ':</strong> ' + formData[key];
+                        var labelHTML = '<label>' + key + '</label><br>'; // Placeholder as label
+                        responseItem.innerHTML = '<strong>' + key + '</strong> ' + '<p>' + formData[key] + '</p>';
                         responseContainer.appendChild(responseItem);
                     }
                 }
